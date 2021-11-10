@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('cuentas', App\Http\Controllers\CuentaController::class);
+Route::get('/cuentas/search/{nombre}', [App\Http\Controllers\CuentaController::class, 'search']);
+
+Route::resource('movimientos', App\Http\Controllers\MovimientoController::class);
+Route::get('/movimientos/search/{nombre}', [App\Http\Controllers\MovimientoController::class, 'search']);
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+//Route::post('/cuentas', [App\Http\Controllers\CuentaController::class, 'store']);
+
+
+
