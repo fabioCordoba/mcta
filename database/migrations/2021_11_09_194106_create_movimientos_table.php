@@ -21,6 +21,7 @@ class CreateMovimientosTable extends Migration
             $table->foreign('cuenta_id')->references('id')->on('cuentas')->onDelete('cascade');
             $table->string('monto');
             $table->string('descripcion');
+            $table->string('tipo');
             $table->string('estado');
             $table->timestamps();
         });

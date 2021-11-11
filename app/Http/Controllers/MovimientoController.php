@@ -25,11 +25,13 @@ class MovimientoController extends Controller
             'cuenta_id' => 'required',
             'monto' => 'required',
             'descripcion' => 'required',
+            'tipo' => 'required'
         ], [
             'user_id.required' => 'Debes ingresar un user',
             'cuenta_id.required' => 'Debes ingresar una cuenta',
             'nombre.required' => 'Debes ingresar un nombre',
             'descripcion.required' => 'Debes ingresar una descripcion',
+            'tipo.required' => 'tipo requerido',
         ])->validate();
 
         $movimiento = Movimiento::create([
@@ -37,6 +39,7 @@ class MovimientoController extends Controller
             'cuenta_id' => $request->cuenta_id,
             'monto' => $request->monto,
             'descripcion' => $request->descripcion,
+            'tipo' => $request->tipo,
             'estado' => 'Activo'
         ]);
 
@@ -64,11 +67,13 @@ class MovimientoController extends Controller
             'cuenta_id' => 'required',
             'monto' => 'required',
             'descripcion' => 'required',
+            'tipo' => 'required'
         ], [
             'user_id.required' => 'Debes ingresar un user',
             'cuenta_id.required' => 'Debes ingresar una cuenta',
             'nombre.required' => 'Debes ingresar un nombre',
             'descripcion.required' => 'Debes ingresar una descripcion',
+            'tipo.required' => 'tipo requerido',
         ])->validate();
 
         $movimiento = Movimiento::find($id);
@@ -76,6 +81,8 @@ class MovimientoController extends Controller
             'cuenta_id' => $request->cuenta_id,
             'monto' => $request->monto,
             'descripcion' => $request->descripcion,
+            'tipo' => $request->tipo,
+            
         ]);
 
         return [

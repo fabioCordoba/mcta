@@ -14,6 +14,7 @@ class Movimiento extends Model
         'cuenta_id',
         'monto',
         'descripcion',
+        'tipo',
         'estado',
     ];
 
