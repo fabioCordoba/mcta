@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Laravel\Sanctum\Guard;
 
 class AuthController extends Controller
 {
@@ -48,10 +49,10 @@ class AuthController extends Controller
 
         if(!$user || !Hash::check($fields['password'], $user->password)){
             return response([
-                'noti' => 'Bad Creds'
+                'noti' => 'Invalid login credential!!'
             ], 401);
         }
-
+        /* mio
         $token = $user->createToken('mcta_v1')->plainTextToken;
 
         $response = [
@@ -60,6 +61,21 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
+        */
+
+        $token = $user->createToken($user->name);
+
+        return response([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+            'token' => $token->plainTextToken,
+            'token_expires_at' => $token,
+        ], 200);
+
+        
 
     }
 
