@@ -14,11 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
-Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
-Route::group(['middleware'=>['auth:sanctum']], function () {
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
+
+Route::group(['middleware'=>['auth:api']], function () {
     Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+
+    //Route::post('/forgot', 'ForgotPasswordController@forgot');
+    //Route::post('/reset', 'ForgotPasswordController@reset');
 
     Route::resource('cuentas', App\Http\Controllers\CuentaController::class);
     Route::get('/cuentas/search/{nombre}', [App\Http\Controllers\CuentaController::class, 'search']);
@@ -28,7 +32,8 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
 });
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 

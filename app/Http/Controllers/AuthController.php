@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use Laravel\Sanctum\Guard;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -27,14 +27,17 @@ class AuthController extends Controller
 
         $user->assignRole('USER');
 
-        $token = $user->createToken('mcta_v1')->plainTextToken;
+        $token = $user->createToken($user->name);
 
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
+        return response([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+            'token' => $token->accessToken,
+            'token_expires_at' => $token->token->expires_at,
+        ], 200);
 
     }
 
@@ -52,16 +55,6 @@ class AuthController extends Controller
                 'noti' => 'Invalid login credential!!'
             ], 401);
         }
-        /* mio
-        $token = $user->createToken('mcta_v1')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
-        */
 
         $token = $user->createToken($user->name);
 
@@ -71,20 +64,28 @@ class AuthController extends Controller
             'email' => $user->email,
             'created_at' => $user->created_at,
             'updated_at' => $user->updated_at,
-            'token' => $token->plainTextToken,
-            'token_expires_at' => $token,
+            'token' => $token->accessToken,
+            'token_expires_at' => $token->token->expires_at,
         ], 200);
-
-        
-
     }
 
     public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
+        $this->validate($request, [
+            'allDevice' => 'required|boolean'
+        ]);
 
-        return [
-            'noti' => 'Logged out'
-        ];
+        $user = Auth::user();
+        if ($request->allDevice) {
+            $user->tokens->each(function ($token) {
+                $token->delete();
+            });
+            return response(['message' => 'Logged out from all device !!'], 200);
+        }
+
+        $userToken = $user->token();
+        $userToken->delete();
+        return response(['message' => 'Logged Successful !!'], 200);
+
     }
 }
