@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,17 +27,24 @@ Route::group(['middleware'=>['auth:api']], function () {
 
     Route::resource('cuentas', App\Http\Controllers\CuentaController::class);
     Route::get('/cuentas/search/{nombre}', [App\Http\Controllers\CuentaController::class, 'search']);
+    Route::get('/cuentas/miscta/{id}', [App\Http\Controllers\CuentaController::class, 'miscuentas']);
 
     Route::resource('movimientos', App\Http\Controllers\MovimientoController::class);
     Route::get('/movimientos/search/{nombre}', [App\Http\Controllers\MovimientoController::class, 'search']);
 });
 
 
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('/test', function () {
+        
+    return response([
+        'users' => User::whereHas('roles',function ($q){
+            $q->where('name', 'ADMINISTRADOR');
+        })->get(),
+    ], 200);
+});
 
 

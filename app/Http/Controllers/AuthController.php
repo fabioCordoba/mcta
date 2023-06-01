@@ -66,6 +66,8 @@ class AuthController extends Controller
             'updated_at' => $user->updated_at,
             'token' => $token->accessToken,
             'token_expires_at' => $token->token->expires_at,
+            //'token' => $token->accessToken,
+            //'token_expires_at' => $token->token->expires_at,
         ], 200);
     }
 

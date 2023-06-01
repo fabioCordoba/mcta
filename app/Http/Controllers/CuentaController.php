@@ -10,7 +10,8 @@ class CuentaController extends Controller
 {
     public function index()
     {
-        return Cuenta::all();
+        $cuentas = Cuenta::all();
+        return response($cuentas,200);
     }
 
     public function create()
@@ -96,6 +97,11 @@ class CuentaController extends Controller
     public function search($nombre)
     {
         return Cuenta::where('nombre', 'like', '%'.$nombre.'%')->get();
+    }
+
+    public function miscuentas($id){
+        $cuentas = Cuenta::where('user_id',$id)->get();
+        return response($cuentas,200);
     }
 
 }
