@@ -72,7 +72,9 @@ class Cuenta extends Component
     public function render()
     {
         return view('livewire.cuenta',[
-            'cuentas' => Cta::all(),
+            'cuentas' => Cta::where('user_id', Auth::user()->id)
+                ->where('estado', 'Activo')
+                ->get(),
         ]);
     }
 }

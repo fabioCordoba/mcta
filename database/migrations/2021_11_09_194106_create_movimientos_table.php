@@ -19,7 +19,7 @@ class CreateMovimientosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('cuenta_id');
             $table->foreign('cuenta_id')->references('id')->on('cuentas')->onDelete('cascade');
-            $table->string('monto');
+            $table->float('monto', 10, 2);
             $table->string('descripcion');
             $table->string('tipo');
             $table->string('estado');

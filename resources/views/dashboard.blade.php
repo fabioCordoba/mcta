@@ -10,7 +10,6 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <!-- <h5>{{Auth::user()->roles->implode('name', ',')}}</h5> -->
                 <x-jet-welcome />
-                <!-- <livewire:cuenta />  -->
             </div>
 
         </div>

@@ -20,4 +20,9 @@ class Cuenta extends Model
     {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
+
+    public function movimiento()
+    {
+        return $this->hasMany('App\Models\Movimiento', 'cuenta_id');
+    }
 }

@@ -28,4 +28,6 @@ class Movimiento extends Model
     {
         return $this->belongsTo('App\Models\Cuenta', 'cuenta_id');
     }
+
+
 }
