@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Movimientos') }}
         </h2>
     </x-slot>
 
@@ -9,8 +9,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <!-- <h5>{{Auth::user()->roles->implode('name', ',')}}</h5> -->
-                <x-jet-welcome />
-                <!-- <livewire:cuenta />  -->
+                <x-jet-welcome /> 
+                {{-- <livewire:cuenta />  --}}
             </div>
 
         </div>
