@@ -45,6 +45,7 @@
                                     <option value="Salida" selected>Salida</option>
                                     <option value="Entrada" >Entrada</option>
                                     <option value="Transfer" >Transfer</option>
+                                    <option value="PagoAlex" >PagoAlex</option>
                                 </select>
                             </div>
                         </div>
