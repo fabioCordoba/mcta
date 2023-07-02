@@ -39,7 +39,7 @@
                                             @php
                                                 $val = $val + $item->monto
                                             @endphp
-                                        @elseif($item->tipo == 'Salida' || $item->tipo == 'Transfer')
+                                        @elseif($item->tipo == 'Salida' || $item->tipo == 'Transfer' || $item->tipo == 'PagoAlex')
                                             @php
                                                 $val = $val - $item->monto
                                             @endphp
