@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Movimientos extends Component
 {
-    public $cuenta_id, $tipo, $descripcion, $monto, $movimiento;
+    public $cuenta_id, $tipo, $descripcion, $monto, $movimiento, $cuenta_destino_id;
     protected $listeners = ['say-delete' => 'delete'];
 
     public function render()
@@ -36,6 +36,7 @@ class Movimientos extends Component
         $this->descripcion = null;
         $this->monto = null;
         $this->movimiento = null; 
+        $this->cuenta_destino_id = null;
     }
 
     public function store(){
@@ -46,7 +47,7 @@ class Movimientos extends Component
             'descripcion' => 'required',
             'monto' => 'required',
         ]);
-        
+
         if($this->movimiento){
             $this->movimiento->update([
                 'user_id' => Auth::user()->id,
@@ -56,8 +57,22 @@ class Movimientos extends Component
                 'tipo' => $this->tipo,
                 'estado' => 'Activo'
             ]);
+
+            if ($this->cuenta_destino_id && $this->movimiento->tipo == 'Transfer') {
+                
+                // Movimiento Destino
+                $movimiento_destino = Movimiento::create([
+                    'user_id' => Auth::user()->id,
+                    'cuenta_id' => $this->cuenta_destino_id,
+                    'monto' => $this->monto,
+                    'descripcion' =>'Movimiento desde '. $this->movimiento->cuenta->nombre . ' a ' . Auth::user()->cuentas()->find($this->cuenta_destino_id)->nombre,
+                    'tipo' => 'Entrada',
+                    'estado' => 'Activo'
+                ]);
+            }
             $this->dispatchBrowserEvent('msj',['msj' => 'Movimiento Actualizada con exito...', 'tipo' => 'alert-success']);
         }else{
+            // Movimiento Origen
             $movimiento = Movimiento::create([
                 'user_id' => Auth::user()->id,
                 'cuenta_id' => $this->cuenta_id,
@@ -66,10 +81,26 @@ class Movimientos extends Component
                 'tipo' => $this->tipo,
                 'estado' => 'Activo'
             ]);
+
+            if ($this->cuenta_destino_id && $movimiento->tipo == 'Transfer') {
+                
+                // Movimiento Destino
+                $movimiento_destino = Movimiento::create([
+                    'user_id' => Auth::user()->id,
+                    'cuenta_id' => $this->cuenta_destino_id,
+                    'monto' => $this->monto,
+                    'descripcion' =>'Movimiento desde '. $movimiento->cuenta->nombre . ' a ' . Auth::user()->cuentas()->find($this->cuenta_destino_id)->nombre,
+                    'tipo' => 'Entrada',
+                    'estado' => 'Activo'
+                ]);
+            }
+
             $this->dispatchBrowserEvent('msj',['msj' => 'Movimiento agregada con exito...', 'tipo' => 'alert-success']);
         }
         
+        
         $this->closeModal('Movimiento');
+        $this->emit('registroGuardado');
     }
 
     public function delMovimiento($id){

@@ -10,8 +10,8 @@
             <div >
                 <livewire:contadores /> 
             </div>
-            <hr>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            
+            <div class="py-10">
                 <!-- <h5>{{Auth::user()->roles->implode('name', ',')}}</h5> -->
                 <livewire:movimientos /> 
             </div>

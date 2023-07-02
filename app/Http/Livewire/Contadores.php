@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class Contadores extends Component
 {
     public $total_entradas, $total_salidas, $movimientos;
+    protected $listeners = [
+        'registroGuardado' => 'render'
+    ];
 
     public function render()
     {

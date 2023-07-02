@@ -17,14 +17,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware('auth:sanctum')->group(function () {
+    // Rutas protegidas que requieren autenticación
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/cuentas', function () {
-    return view('cuenta.cuenta');
-})->name('cuentas');
+    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    
+    Route::middleware(['auth:sanctum', 'verified'])->get('/cuentas', function () {
+        return view('cuenta.cuenta');
+    })->name('cuentas');
+    
+    Route::middleware(['auth:sanctum', 'verified'])->get('/movimiento', function () {
+        return view('movimiento.movimiento');
+    })->name('movimiento');
+    
+});
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/movimiento', function () {
-    return view('movimiento.movimiento');
-})->name('movimiento');
