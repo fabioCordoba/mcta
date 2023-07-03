@@ -42,11 +42,12 @@
                                 <label for="descripcion" class="form-label">Tipo</label>
                                 <select class="form-control" name="tipo" id="tipo" style="background-color: white; color: black;" wire:model="tipo">
                                     <option  selected>Seleccione una opcion</option>
-                                    <option value="Salida" selected>Salida</option>
                                     <option value="Entrada" >Entrada</option>
+                                    <option value="Salida" selected>Salida</option>
                                     <option value="Transfer" >Transfer</option>
                                     <option value="PagoAlex" >PagoAlex</option>
                                     <option value="Prestamo" >Prestamo</option>
+
                                 </select>
                             </div>
                         </div>

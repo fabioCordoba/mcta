@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Contadores extends Component
 {
-    public $total_entradas, $total_salidas, $movimientos;
+    public $total_entradas, $total_salidas, $total_tranfer, $movimientos;
     protected $listeners = [
         'registroGuardado' => 'render'
     ];
@@ -20,8 +20,9 @@ class Contadores extends Component
                 ->where('estado', 'Activo')
                 ->get();
         
-         $this->total_entradas =  $this->movimientos->where('tipo', 'Entrada')->pluck('monto')->sum();
-         $this->total_salidas =  $this->movimientos->where('tipo', 'Salida')->pluck('monto')->sum();
+        $this->total_tranfer =  $this->movimientos->where('tipo', 'Transfer')->pluck('monto')->sum();
+        $this->total_entradas = $this->movimientos->where('tipo', 'Entrada')->pluck('monto')->sum() - $this->total_tranfer;
+        $this->total_salidas =  $this->movimientos->where('tipo', 'Salida')->pluck('monto')->sum();
 
         return view('livewire.contadores',[
             'cuentas' => Cuenta::where('user_id', Auth::user()->id)
