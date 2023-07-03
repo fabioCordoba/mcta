@@ -46,6 +46,7 @@
                                     <option value="Entrada" >Entrada</option>
                                     <option value="Transfer" >Transfer</option>
                                     <option value="PagoAlex" >PagoAlex</option>
+                                    <option value="Prestamo" >Prestamo</option>
                                 </select>
                             </div>
                         </div>
@@ -139,7 +140,7 @@
                                 {{$item->descripcion}}
                             </td>
                             <td class="px-6 py-4 text-center font-medium">
-                                $ {{$item->monto}}
+                                $ {{number_format($item->monto, 2)}}
                             </td>
                             <td class="px-6 py-4 text-center font-medium">
                                 @if ($item->tipo == 'Entrada')

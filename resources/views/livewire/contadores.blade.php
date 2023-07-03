@@ -4,7 +4,7 @@
             <div class="flex flex-row bg-green-100 shadow-sm rounded p-2">
                 <div class="flex flex-col flex-grow ml-4">
                     <div class="text-sm text-gray-500">Entradas</div>
-                    <div class="font-bold text-sm">$ {{$total_entradas}}</div>
+                    <div class="font-bold text-sm">$ {{number_format($total_entradas, 2)}}</div>
                 </div>
             </div>
         </div>
@@ -13,7 +13,7 @@
             <div class="flex flex-row bg-red-100 shadow-sm rounded p-2">
                 <div class="flex flex-col flex-grow ml-4">
                     <div class="text-sm text-gray-500 ">Salidas</div>
-                    <div class="font-bold text-sm">$ {{$total_salidas}}</div>
+                    <div class="font-bold text-sm">$ {{number_format($total_salidas, 2)}}</div>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
 
                                 @if ($item->movimiento->count() > 0)
                                     @foreach ($item->movimiento as $item)
-                                        @if ($item->tipo == 'Entrada')
+                                        @if ($item->tipo == 'Entrada' || $item->tipo == 'Prestamo')
                                             @php
                                                 $val = $val + $item->monto
                                             @endphp
@@ -46,7 +46,7 @@
                                         @endif
                                     @endforeach 
                                 @endif
-                                $ {{ $val}}
+                                $ {{ number_format($val, 2)}}
                             </div>
                         </div>
                         </div>
