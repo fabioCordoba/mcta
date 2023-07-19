@@ -6,16 +6,18 @@
     </x-slot>
 
     <div class="py-12">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div >
                 <livewire:contadores /> 
             </div>
             
             <div class="py-10">
-                <!-- <h5>{{Auth::user()->roles->implode('name', ',')}}</h5> -->
                 <livewire:movimientos /> 
             </div>
 
         </div>
+
+
     </div>
 </x-app-layout>

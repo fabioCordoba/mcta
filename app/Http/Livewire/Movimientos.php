@@ -6,19 +6,30 @@ use Livewire\Component;
 use App\Models\Movimiento;
 use App\Models\Cuenta;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Movimientos extends Component
 {
-    public $cuenta_id, $tipo, $descripcion, $monto, $movimiento, $cuenta_destino_id;
+    public $cuenta_id, $tipo, $descripcion, $monto, $movimiento, $cuenta_destino_id, $hoy, $start, $end, $dataMovimientos;
     protected $listeners = ['say-delete' => 'delete'];
 
     public function render()
     {
+        $this->hoy = Carbon::now()->locale('es')->toImmutable();
+        $this->start = $this->hoy->startOfMonth(); //primer dia del mes editable
+        $this->end = $this->hoy->endOfMonth(); // ultimo dia del mes no editable
+
+        $this->dataMovimientos = Movimiento::where('user_id', Auth::user()->id)
+            ->where('estado', 'Activo')
+            ->whereDate('created_at', '>=', $this->start)
+            ->whereDate('created_at', '<=', $this->end)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        // dd($this->hoy, $this->start, $this->end, $this->dataMovimientos);
+
         return view('livewire.movimientos',[
-            'movimientos' => Movimiento::where('user_id', Auth::user()->id)
-                ->where('estado', 'Activo')
-                ->orderBy('id', 'DESC')
-                ->get(),
+            'movimientos' => $this->dataMovimientos,
             'cuentas' => Cuenta::where('user_id', Auth::user()->id)
                 ->where('estado', 'Activo')
                 ->get()
