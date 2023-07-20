@@ -41,31 +41,17 @@
                                     @endphp
 
                                     @if ($item->movimiento->count() > 0)
-                                        @if ($item->nombre == 'Alex')
-                                            @foreach ($item->movimiento as $item)
-                                                @if ($item->tipo == 'Entrada' || $item->tipo == 'Prestamo')
-                                                    @php
-                                                        $val = $val + $item->monto
-                                                    @endphp
-                                                @elseif($item->tipo == 'Salida' || $item->tipo == 'Transfer' || $item->tipo == 'PagoAlex')
-                                                    @php
-                                                        $val = $val - $item->monto
-                                                    @endphp
-                                                @endif
-                                            @endforeach 
-                                        @else
-                                            @foreach ($item->movimiento->where('created_at', '>=', $start)->where('created_at', '<=', $end) as $item)
-                                                @if ($item->tipo == 'Entrada' || $item->tipo == 'Prestamo')
-                                                    @php
-                                                        $val = $val + $item->monto
-                                                    @endphp
-                                                @elseif($item->tipo == 'Salida' || $item->tipo == 'Transfer' || $item->tipo == 'PagoAlex')
-                                                    @php
-                                                        $val = $val - $item->monto
-                                                    @endphp
-                                                @endif
-                                            @endforeach 
-                                        @endif
+                                        @foreach ($item->movimiento->where('created_at', '>=', $start)->where('created_at', '<=', $end) as $item)
+                                            @if ($item->tipo == 'Entrada' || $item->tipo == 'Prestamo')
+                                                @php
+                                                    $val = $val + $item->monto
+                                                @endphp
+                                            @elseif($item->tipo == 'Salida' || $item->tipo == 'Transfer' || $item->tipo == 'PagoAlex')
+                                                @php
+                                                    $val = $val - $item->monto
+                                                @endphp
+                                            @endif
+                                        @endforeach 
                                     @endif
                                     $ {{ number_format($val, 2)}}
                                 </div>
