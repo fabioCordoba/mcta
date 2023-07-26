@@ -41,7 +41,8 @@
                                     @endphp
 
                                     @if ($item->movimiento->count() > 0)
-                                        @foreach ($item->movimiento->where('created_at', '>=', $start)->where('created_at', '<=', $end) as $item)
+                                        {{-- @foreach ($item->movimiento->where('created_at', '>=', $start)->where('created_at', '<=', $end) as $item) --}}
+                                        @foreach ($item->movimiento as $item)
                                             @if ($item->tipo == 'Entrada' || $item->tipo == 'Prestamo')
                                                 @php
                                                     $val = $val + $item->monto

@@ -26,6 +26,11 @@ class Movimientos extends Component
             ->orderBy('id', 'DESC')
             ->get();
 
+            // $this->dataMovimientos = Movimiento::where('user_id', Auth::user()->id)
+            //     ->where('estado', 'Activo')
+            //     ->orderBy('id', 'DESC')
+            //     ->get();
+
         // dd($this->hoy, $this->start, $this->end, $this->dataMovimientos);
 
         return view('livewire.movimientos',[
