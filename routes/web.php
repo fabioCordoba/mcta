@@ -29,6 +29,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/movimientos', function ()
     return view('movimiento.movimiento');
 })->name('movimientos');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/search', function () {
+    return view('movimiento.search');
+})->name('search');
+
 Route::get('/fire', function () {
     return "hola";
 })->name('fire');
